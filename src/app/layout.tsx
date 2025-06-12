@@ -1,9 +1,14 @@
 import type { Metadata } from "next";
-import { Monda } from "next/font/google";
+import { Monda, Roboto } from "next/font/google";
 import "./globals.css";
 
 const monda = Monda({
   variable: "--font-monda",
+  subsets: ["latin"],
+})
+
+const roboto = Roboto({
+  variable: "--font-roboto",
   subsets: ["latin"],
 })
 
@@ -27,7 +32,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${monda.variable} antialiased`}
+        className={`${roboto.className} ${monda.variable} antialiased`}
       >
         {children}
       </body>
