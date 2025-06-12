@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/carousel"
 import { ArrowRight } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { useState } from "react"
 
 interface mealPlanProps {
   image: string;
@@ -58,8 +59,14 @@ const mealPlanItem: mealPlanProps[] = [
 ]
 
 export default function MealPlanModule() {
+  const [showModal, setShowModal] = useState(false);
+
+  const handleOpenModal = () => {
+    setShowModal(true);
+  }
+
   return (
-    <section className="w-full px-32 py-16 flex flex-col items-center text-center gap-9 bg-[var(--secondary)]">
+    <section className="w-full px-32 py-16 flex flex-col items-center text-center gap-10 bg-secondary">
       <div>
         <h1 className="uppercase text-4xl font-bold text-white leading-12">
           Good
@@ -100,6 +107,7 @@ export default function MealPlanModule() {
                           <p className="text-lg text-white font-sans pb-2">{item.price}/meal</p>
                           <Button
                             variant={"default"}
+                            onClick={handleOpenModal}
                           >
                             See More Details <ArrowRight className="inline "/> 
                           </Button>
@@ -108,6 +116,14 @@ export default function MealPlanModule() {
                     </Card>
                   </div>
                 </div>
+                <div>
+                  { showModal ? (
+                      <div className="absolute top-0 left-1/2 translate-y-1/2 flex flex-col items-center justify-center w-32 h-52 bg-white rounded-2xl">
+                        <h1>{item.title}</h1>
+                        <Button variant={"destructive"} onClick={() => setShowModal(false)}> Close </Button>
+                      </div>
+                  ) : null }
+                </div>  
               </CarouselItem>
             )
           })}
@@ -115,6 +131,7 @@ export default function MealPlanModule() {
         <CarouselPrevious className="text-primary border-2 border-primary w-10 h-10" />
         <CarouselNext className="text-primary border-2 border-primary w-10 h-10" />
       </Carousel>
+      
     </section>
   )
 }
