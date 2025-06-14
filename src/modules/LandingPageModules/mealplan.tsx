@@ -66,9 +66,9 @@ export default function MealPlanModule() {
   }
 
   return (
-    <section className="w-full px-32 py-16 flex flex-col items-center text-center gap-10 bg-secondary">
-      <div>
-        <h1 className="uppercase text-4xl font-bold text-white leading-12">
+    <section className="w-full flex flex-col items-center text-center gap-14 bg-secondary px-5 py-5 md:px-20 md:py-16 lg:px-32">
+      <div className="flex flex-col gap-2">
+        <h1 className="uppercase text-2xl leading-10 md:text-4xl font-bold text-white lg:leading-12">
           Good
           <span className="text-[var(--primary)]"> Plan </span>
           Good
@@ -79,12 +79,13 @@ export default function MealPlanModule() {
           <span className="text-[var(--primary)]"> Plan </span>
           Now!
         </h1>
+        <p className="text-white text-sm md:text-base">Smart nutrition made simple—crafted by experts, designed for real life.</p>
       </div>
       <Carousel>
-        <CarouselContent className="ml-0 lg:max-w-[1185px]">
+        <CarouselContent className="ml-0 max-w-80 md:max-w-2xl lg:max-w-[1185px]">
           {mealPlanItem.map((item, index) => {
             return (
-              <CarouselItem key={index} className="flex items-center justify-center basis-auto">
+              <CarouselItem key={index} className="flex items-center justify-center md:basis-auto">
                 <div
                   style={{
                     backgroundImage: `url(${item.image})`,
@@ -107,7 +108,9 @@ export default function MealPlanModule() {
                           <p className="text-lg text-white font-sans pb-2">{item.price}/meal</p>
                           <Button
                             variant={"default"}
-                            onClick={handleOpenModal}
+                            onClick={
+                              handleOpenModal
+                            }
                           >
                             See More Details <ArrowRight className="inline "/> 
                           </Button>
@@ -128,8 +131,8 @@ export default function MealPlanModule() {
             )
           })}
         </CarouselContent>
-        <CarouselPrevious className="text-primary border-2 border-primary w-10 h-10" />
-        <CarouselNext className="text-primary border-2 border-primary w-10 h-10" />
+        <CarouselPrevious className="text-primary border-2 border-primary w-10 h-10 hidden lg:flex" />
+        <CarouselNext className="text-primary border-2 border-primary w-10 h-10 hidden lg:flex" />
       </Carousel>
       
     </section>

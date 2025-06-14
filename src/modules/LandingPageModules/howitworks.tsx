@@ -21,7 +21,7 @@ export const HowItWorksItems = ({
 }) => {
   const { ref, inView } = useInView({ 
     triggerOnce: true,
-    threshold: 0.3 
+    threshold: 0.1 
   });
 
   return (
@@ -31,12 +31,12 @@ export const HowItWorksItems = ({
       animate={ inView ? { opacity: 1, x: 0 } : {}}
       transition={{
         type: "spring",
-        stiffness: 260,
+        stiffness: 200,
         damping: 25,
         duration: 0.5,
         delay:  0.2 * index
       }}
-      className="flex flex-col items-center gap-3 max-w-72"
+      className={`flex flex-col items-center max-w-72 gap-3 ${!title ? 'hidden lg:flex' : ''}`}
     >
       <Image src={image} alt={title ?? ''} width={width} height={height} className="pl-8" />
       <h2 className="text-xl font-bold text-center">{title}</h2>
@@ -45,14 +45,12 @@ export const HowItWorksItems = ({
   )
 }
   
-
-
 export default function HowItWorksModule() {
   return (
-    <section className="w-full px-32 my-16 flex flex-col items-center text-center gap-12">
-      <h1 className="text-4xl font-bold text-[var(--primary)]">One, Two, Three <br /> <span className="text-black">Let's Eat!</span></h1>
+    <section className="w-full flex flex-col items-center text-center gap-12 px-5 my-10 md:px-20 md:my-16 lg:px-32">
+      <h1 className="text-3xl font-bold text-primary md:text-4xl ">One, Two, Three <br /> <span className="text-black">Let's Eat!</span></h1>
       <div 
-        className="flex items-center w-full justify-between"
+        className="flex flex-col items-center w-full gap-10 lg:flex-row lg:justify-between"
       >
         <HowItWorksItems 
           image={'/step1.png'}
@@ -62,12 +60,14 @@ export default function HowItWorksModule() {
           description={'Choose a meal plan that suits your needs and dietary preferences.'}
           index={0}
         />
+        
         <HowItWorksItems
           image={'/arrow.png'}
           width={150}
           height={150}
           index={1}
         />
+
         <HowItWorksItems 
           image={'/step2.png'}
           width={160}
@@ -76,12 +76,14 @@ export default function HowItWorksModule() {
           description={'Order your meals online and have them delivered to your doorstep.'}
           index={2}
         />
+
         <HowItWorksItems
           image={'/arrow.png'}
           width={150}
           height={150}
           index={3}
         />
+        
         <HowItWorksItems 
           image={'/step3.png'}
           width={180}

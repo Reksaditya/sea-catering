@@ -40,8 +40,8 @@ export default function ServicesModule() {
   })
 
   return (
-    <section className="bg-white h-[420px] w-full px-32 z-20 flex flex-col items-center">
-      <motion.div className="flex justify-between items-center w-full h-full">
+    <section className="bg-white w-full z-20 flex items-center my-10 px-5 md:px-20 lg:px-32 lg:my-16">
+      <motion.div className="grid w-full h-full gap-5 lg:flex-row lg:justify-between grid-cols-1 md:grid-cols-2 lg:grid-cols-4">
         {ServicesItems.map((item, index) => (
           <motion.div
             ref={ref}
@@ -50,11 +50,11 @@ export default function ServicesModule() {
             animate={ inView ? {  opacity: 1, y: 0 } : {}}
             exit={{ opacity: 0, y: -50 }}
             transition={{ duration: 0.5, delay: index * 0.1 }}
-            className="flex items-center gap-10 justify-center"
+            className="items-center gap-10 justify-center flex"
           >
             <div>
               <Card key={index}>
-                <CardContent className="flex flex-col items-center max-w-72 min-h-60 gap-2">
+                <CardContent className="flex flex-col items-center max-w-72 max-h-80 lg:min-h-60 gap-2">
                   <Image src={item.image} alt={item.title} width={100} height={100}/>
                   <h2 className="text-xl font-bold">{item.title}</h2>
                   <p className="text-center text-sm">{item.description}</p>

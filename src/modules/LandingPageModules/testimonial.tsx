@@ -66,16 +66,16 @@ const testimonialItem: TestimonialProps[] = [
 
 export default function TestimonialModule() {
   return (
-    <section className="px-32 py-16 flex flex-col gap-14 justify-center items-center">
+    <section className="flex flex-col gap-14 justify-center items-center px-5 py-10 md:px-20 md:py-16 lg:px-32 ">
       <div className="flex flex-col justify-center items-center gap-5">
-        <h1 className="text-4xl font-bold uppercase">What Do <span className="text-primary">People</span> Say <span className="text-primary">About Us</span></h1>
-        <p>Real stories from people who’ve made the switch to effortless, nourishing meals—delivered right to their door.</p>
+        <h1 className="font-bold uppercase text-center text-3xl md:text-4xl ">What Do <span className="text-primary ">People</span> Say <span className="text-primary">About Us</span></h1>
+        <p className="text-gray-700 text-sm lg:text-base text-center">Real stories from people who’ve made the switch to effortless, nourishing meals—delivered right to their door.</p>
       </div>
-      <Carousel className="h-full">
+      <Carousel className="h-full max-w-80 md:max-w-2xl lg:max-w-none">
         <CarouselContent>
           {testimonialItem.map((item, index) => {
             return (
-              <CarouselItem key={index} className="basis-auto max-w-80">
+              <CarouselItem key={index} className="max-w-80 md:basis-auto ">
                 <Card className="min-h-36 max-h-56">
                   <CardContent className="flex flex-col gap-5">
                     <div className="flex items-center gap-4">
@@ -89,7 +89,7 @@ export default function TestimonialModule() {
                             ))}
                           </div>
                           <div className="absolute top-0 flex">
-                            { Array.from({ length: item.star }, () => (
+                            {Array.from({ length: item.star }, () => (
                                 <Star fill="yellow" strokeWidth={0} key={Math.random()} />
                             ))}
                           </div>
