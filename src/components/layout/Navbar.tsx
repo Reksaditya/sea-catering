@@ -1,5 +1,5 @@
 'use client'
-import { Hamburger, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import { Button } from "../ui/Button";
 import { usePathname, useRouter } from "next/navigation";
 import { scroller } from 'react-scroll'
@@ -43,9 +43,9 @@ export default function Navbar() {
   const pathname = usePathname();
 
   return (
-    <nav className="flex items-center justify-between bg-white shadow-md px-5 py-2 md:px-20 lg:px-32 w-full lg:fixed z-50">
+    <nav className="flex items-center justify-between bg-white shadow-md px-5 py-2 md:px-20 lg:px-32 w-full relative z-10">
       <div>
-        <img src={'/mainlogo.png'} alt="logo" width={125} className="scale-75 md:scale-100" />
+        <img src={'/seacatering-logo/mainlogo.png'} alt="logo" width={125} className="scale-75 md:scale-100" />
       </div>
       <ul className="lg:flex items-center gap-14 hidden">
         {NavbarItem.map((item, index) => (

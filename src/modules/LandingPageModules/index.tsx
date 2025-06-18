@@ -13,9 +13,9 @@ export default function LandingPageModules() {
         <Image 
           src={'/backgroundpattern.png'} 
           alt="pattern" 
-          width={600} 
-          height={600}
-          className="absolute z-0 top-6 right-0 hidden lg:flex"
+          width={690} 
+          height={690}
+          className="absolute top-0 right-0 hidden lg:flex Z-0"
         />
         <motion.div
             initial={{ translateX: 100, opacity: 0 }}
@@ -72,7 +72,7 @@ export default function LandingPageModules() {
               duration: 0.8,
               delay: 0.5 
             }}
-            className="bg-black opacity-50 w-[550px] h-[428px] absolute rounded-t-[100px] z-0 top-48 right-32 hidden lg:flex"
+            className="bg-black opacity-50 w-[550px] h-[426px] absolute rounded-t-[100px] z-0 top-64 right-32 hidden lg:flex"
           ></motion.div>
         </div>
       </div>
