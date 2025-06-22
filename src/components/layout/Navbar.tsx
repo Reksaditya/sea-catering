@@ -72,6 +72,9 @@ export default function Navbar() {
         <Button
           variant={'black'}
           className="transition duration-200 ease-in-out hidden lg:flex w-20 h-10"
+          onClick={() => {
+            push('/auth/signin')
+          }}
         >
           Login
         </Button>
@@ -108,6 +111,9 @@ export default function Navbar() {
               <Button
                 variant={'black'}
                 className="transition duration-200 ease-in-out w-20 h-10"
+                onClick={() => {
+                  push('/auth/signin')
+                }}
               >
                 Login
               </Button>

@@ -95,7 +95,7 @@ const mealPlanItem: mealPlanProps[] = [
       'Snack: Edamame sprinkled with sea salt',
       'Dinner: Stir-fried vegetables',
     ],
-    price: 'Rp30.000,00'
+    price: 'Rp25.000,00'
   },
   {
     image: './meal-plan-section/meal-plan-image/plan5.jpg',

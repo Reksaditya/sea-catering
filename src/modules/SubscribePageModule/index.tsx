@@ -5,6 +5,7 @@ import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { CheckCircle } from "lucide-react";
 import { useRouter } from "next/navigation";
+ 
 
 interface PlanProps {
   icon: string;
@@ -66,12 +67,13 @@ export default function SubscribePage() {
   const { push } = useRouter();
 
   return (
-    <div className="w-full flex flex-col gap-16 items-center px-32 py-16">
-      <h1 className="text-4xl font-bold">Make Your Subscription Order</h1>
+    <div className="w-full flex flex-col gap-16 items-center px-5 my-10 lg:px-32">
+      <h1 className="text-2xl font-bold lg:text-4xl">Make Your Subscription Order</h1>
       <div className="w-full">
-        <ol className="list-decimal font-bold text-2xl flex justify-between w-full">
+        <ol className="list-none text-xl font-bold flex flex-col w-full md:flex-row md:justify-between md:list-decimal lg:text-2xl">
           <li className="max-w-xl">
-            <h3 className="text-2xl font-bold">Personal Information</h3>
+            <form action=""></form>
+            <h3 className="text-xl font-bold md:text-2xl">Personal Information</h3>
             <p className="text-sm font-normal text-gray-700 mt-2">Fill out the form below to make it easier for us to recognize you and get the food to your hands.</p>
             <div className="w-full text-sm flex flex-col gap-3 mt-5">
               <label htmlFor="fullname" >Full Name <span className="text-destructive">*</span></label>
