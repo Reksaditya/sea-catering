@@ -9,12 +9,56 @@ import { useRouter } from "next/navigation";
 import { motion } from "framer-motion";
 
 export default function SignInPage() {
-  const [email, setEmail] = useState("")
-  const [password, setPassword] = useState('')
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  })
+  const [errorMsg, setErrorMsg] = useState('')
+  const [token, setToken] = useState<string | null>(null);
   const [loading, setLoading] = useState(false)
+
   const [type, setType] = useState('password')
   const [icon, setIcon] = useState(<EyeOff />)
   const { push } = useRouter();
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setErrorMsg('');
+    setLoading(true);
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/login`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          email: form.email,
+          password: form.password
+        })
+      })
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        throw new Error(data.error || 'Login Failed')
+      }
+      localStorage.setItem('token', data.token)
+      setToken(data.token)
+      push('/')
+    } catch (error: any) {
+      setErrorMsg(error.message)
+    } finally {
+      setLoading(false)
+    }
+  }
 
   const toggleIcon = () => {
     if (type === 'password') {
@@ -26,43 +70,34 @@ export default function SignInPage() {
     }
   }
 
-  const handleSignIn = () => {
-    if (email === '' && password === '') {
-
-    } else {
-      push('/')
-    }
-  }
-
   return (
-    <div className="h-screen flex items-center justify-center bg-secondary">
-      <Card className="p-10 shadow-xl flex flex-row items-center gap-10">
-        <Image alt="logo" width={300} height={300} src={"/seacatering-logo/headlogo.png"} />
+    <div className="h-screen flex flex-col items-center justify-center gap-2">
+      <Card className="p-10 shadow-xl flex items-center gap-2">
         <CardContent>
           <CardTitle className="text-2xl text-center">Sign In</CardTitle>
           <CardDescription className="text-lg text-center">Sign in to your account</CardDescription>
-          <div className="flex flex-col gap-5 mt-7">
+          <form onSubmit={handleLogin} className="flex flex-col gap-5 mt-7">
             <div>
               <label htmlFor="email">Email</label>
-              <Input 
-                name="email" 
+              <Input
+                name="email"
                 type="email"
-                value={email} 
-                className="w-80 h-12 mt-2" 
-                onChange={(e) => setEmail(e.target.value)}
+                className="w-80 h-12 mt-2"
+                onChange={handleChange}
                 autoComplete="current-email"
+                required
               />
             </div>
             <div>
               <label htmlFor="password">Password</label>
               <div className="flex relative">
-                <Input 
-                  name="password" 
+                <Input
+                  name="password"
                   type={type}
-                  value={password}
-                  className="w-80 h-12 mt-2" 
-                  onChange={(e) => setPassword(e.target.value)} 
+                  className="w-80 h-12 mt-2"
+                  onChange={handleChange}
                   autoComplete="current-password"
+                  required
                 />
                 <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIcon}>{icon}</span>
               </div>
@@ -70,34 +105,21 @@ export default function SignInPage() {
                 <p className="text-primary text-sm mt-2 cursor-pointer">Forgot Password?</p>
               </div>
             </div>
-          </div>
-          <Button
-            variant="default"
-            className="w-full h-12 mt-7"
-            onClick={handleSignIn}
-          >
-            Sign In
-          </Button>
+            <div>
+              <Button
+                variant="default"
+                className="w-full h-12 mt-7"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Processing...' : 'Sign In'}
+              </Button>
+              {errorMsg && <p className="text-destructive text-sm text-center mt-2">{errorMsg}</p>}
+            </div>
+          </form>
           <CardDescription className="text-center mt-3">Don't have an account? <a href="/auth/signup" className="text-primary">Sign Up</a></CardDescription>
         </CardContent>
       </Card>
-      
-      <motion.div 
-        initial={{ translateX: 100, opacity: 0 }}
-        animate={{ translateX: 0, opacity: 1 }}
-        transition={{ 
-          ease: "easeInOut",
-          duration: 0.8 
-        }}
-        className={`absolute right-0 top-0 p-5 ${email === '' || password === '' ? 'block' : 'hidden'}`}
-      >
-        <Card>
-          <CardContent>
-            <CardTitle>Failed Login</CardTitle>
-            <CardDescription>Please enter correct password and email</CardDescription>
-          </CardContent>
-        </Card>
-      </motion.div>
     </div>
   )
 }

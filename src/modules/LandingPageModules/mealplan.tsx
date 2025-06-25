@@ -10,117 +10,128 @@ import {
 } from "@/components/ui/carousel"
 import { ArrowRight, Cross } from "lucide-react";
 import { Button } from "@/components/ui/Button";
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useRouter } from "next/navigation";
 import { scroller } from 'react-scroll'
+import { getMealPlans } from '@/lib/api';
 
 interface mealPlanProps {
-  image: string;
-  modalImage: string;
-  title: string;
+  id: number;
+  name: string;
+  price: number;
   description: string;
-  goodFor: string[];
-  whatIncludes: string[];
-  price: string;
+  imageUrl?: string;
 }
 
-const mealPlanItem: mealPlanProps[] = [
-  {
-    image: './meal-plan-section/meal-plan-image/plan1.jpg',
-    modalImage: './meal-plan-section/modal-popup/protein.jpg',
-    title: 'High-Protein',
-    description: 'Supports muscle maintenance, heart health, and sustained energy.',
-    goodFor: [
-      'Active individuals',
-      'People looking to reduce inflammation',
-      'Those who enjoy a Mediterranean diet.',
-    ],
-    whatIncludes: [
-      'Breakfast: Greek yogurt',
-      'Lunch: Grilled chicken salad',
-      'Snack: Handful of almonds + green apple',
-      'Dinner: Baked salmon, roasted sweet potatoes, and steamed broccoli',
-    ],
-    price: 'Rp40.000,00'
-  },
-  {
-    image: './meal-plan-section/meal-plan-image/plan2.jpg',
-    modalImage: './meal-plan-section/modal-popup/vegetarian.png',
-    title: 'Vegetarian',
-    description: 'Promotes gut health, helps with digestion, and lowers cholesterol.',
-    goodFor: [
-      'Vegetarians',
-      'People with high cholesterol',
-      'Anyone wanting more plant-based meals',
-    ],
-    whatIncludes: [
-      'Breakfast: Oatmeal topped',
-      'Lunch: Chickpea and spinach curry',
-      'Snack: Carrot sticks',
-      'Dinner: Lentil soup with whole-grain toast and a side salad'
-    ],
-    price: 'Rp20.000,00'
-  },
-  {
-    image: './meal-plan-section/meal-plan-image/plan3.jpg',
-    modalImage: './meal-plan-section/modal-popup/lowcarb.jpeg',
-    title: 'Low-Carb',
-    description: 'Helps regulate blood sugar, manage weight, and support cardiovascular function.',
-    goodFor: [
-      'People with insulin resistance',
-      'Type 2 diabetes',
-      'Those on a low-carb diet'
-    ],
-    whatIncludes: [
-      'Breakfast: Scrambled eggs',
-      'Lunch: Grilled turkey lettuce wraps',
-      'Snack: Greek yogurt with walnuts',
-      'Dinner: Zucchini noodles with pesto and grilled shrimp'
-    ],
-    price: 'Rp30.000,00'
-  },
-  {
-    image: './meal-plan-section/meal-plan-image/plan4.jpg',
-    modalImage: './meal-plan-section/modal-popup/asianinspired.jpg',
-    title: 'Asian-Inspired',
-    description: 'Reduces inflammation, supports immunity, and improves digestion.',
-    goodFor: [
-      'People with joint pain',
-      'Autoimmune concerns',
-      'Skin issues',
-    ],
-    whatIncludes: [
-      'Breakfast: Fruit smoothie with spinach and almond milk',
-      'Lunch: Miso soup with tofu, seaweed, and brown rice on the side',
-      'Snack: Edamame sprinkled with sea salt',
-      'Dinner: Stir-fried vegetables',
-    ],
-    price: 'Rp25.000,00'
-  },
-  {
-    image: './meal-plan-section/meal-plan-image/plan5.jpg',
-    modalImage: './meal-plan-section/modal-popup/glutenfree.jpg',
-    title: 'Gluten-Free',
-    description: 'Supports people with gluten sensitivity and boosts energy naturally.',
-    goodFor: [
-      'Those with celiac disease',
-      'Gluten intolerance',
-      'Low energy levels'
-    ],
-    whatIncludes: [
-      'Breakfast: Chia pudding made with coconut milk and berries',
-      'Lunch: Quinoa bowl with black beans, corn, avocado, and lime dressing',
-      'Snack: Rice cakes with almond butter',
-      'Dinner: Grilled steak with roasted Brussels sprouts and mashed cauliflower'
-    ],
-    price: 'Rp30.000,00'
-  },
-]
+// interface mealPlanProps {
+//   modalImage: string;
+//   goodFor: string[];
+//   whatIncludes: string[];
+// }
+
+// const mealPlanItem: mealPlanProps[] = [
+//   {
+//     image: './meal-plan-section/meal-plan-image/plan1.jpg',
+//     modalImage: './meal-plan-section/modal-popup/protein.jpg',
+//     title: 'High-Protein',
+//     description: 'Supports muscle maintenance, heart health, and sustained energy.',
+//     goodFor: [
+//       'Active individuals',
+//       'People looking to reduce inflammation',
+//       'Those who enjoy a Mediterranean diet.',
+//     ],
+//     whatIncludes: [
+//       'Breakfast: Greek yogurt',
+//       'Lunch: Grilled chicken salad',
+//       'Snack: Handful of almonds + green apple',
+//       'Dinner: Baked salmon, roasted sweet potatoes, and steamed broccoli',
+//     ],
+//     price: 'Rp40.000,00'
+//   },
+//   {
+//     image: './meal-plan-section/meal-plan-image/plan2.jpg',
+//     modalImage: './meal-plan-section/modal-popup/vegetarian.png',
+//     title: 'Vegetarian',
+//     description: 'Promotes gut health, helps with digestion, and lowers cholesterol.',
+//     goodFor: [
+//       'Vegetarians',
+//       'People with high cholesterol',
+//       'Anyone wanting more plant-based meals',
+//     ],
+//     whatIncludes: [
+//       'Breakfast: Oatmeal topped',
+//       'Lunch: Chickpea and spinach curry',
+//       'Snack: Carrot sticks',
+//       'Dinner: Lentil soup with whole-grain toast and a side salad'
+//     ],
+//     price: 'Rp20.000,00'
+//   },
+//   {
+//     image: './meal-plan-section/meal-plan-image/plan3.jpg',
+//     modalImage: './meal-plan-section/modal-popup/lowcarb.jpeg',
+//     title: 'Low-Carb',
+//     description: 'Helps regulate blood sugar, manage weight, and support cardiovascular function.',
+//     goodFor: [
+//       'People with insulin resistance',
+//       'Type 2 diabetes',
+//       'Those on a low-carb diet'
+//     ],
+//     whatIncludes: [
+//       'Breakfast: Scrambled eggs',
+//       'Lunch: Grilled turkey lettuce wraps',
+//       'Snack: Greek yogurt with walnuts',
+//       'Dinner: Zucchini noodles with pesto and grilled shrimp'
+//     ],
+//     price: 'Rp30.000,00'
+//   },
+//   {
+//     modalImage: './meal-plan-section/modal-popup/asianinspired.jpg',
+//     goodFor: [
+//       'People with joint pain',
+//       'Autoimmune concerns',
+//       'Skin issues',
+//     ],
+//     whatIncludes: [
+//       'Breakfast: Fruit smoothie with spinach and almond milk',
+//       'Lunch: Miso soup with tofu, seaweed, and brown rice on the side',
+//       'Snack: Edamame sprinkled with sea salt',
+//       'Dinner: Stir-fried vegetables',
+//     ],
+//     price: 'Rp25.000,00'
+//   },
+//   {
+//     modalImage: './meal-plan-section/modal-popup/glutenfree.jpg',
+//     goodFor: [
+//       'Those with celiac disease',
+//       'Gluten intolerance',
+//       'Low energy levels'
+//     ],
+//     whatIncludes: [
+//       'Breakfast: Chia pudding made with coconut milk and berries',
+//       'Lunch: Quinoa bowl with black beans, corn, avocado, and lime dressing',
+//       'Snack: Rice cakes with almond butter',
+//       'Dinner: Grilled steak with roasted Brussels sprouts and mashed cauliflower'
+//     ],
+//     price: 'Rp30.000,00'
+//   },
+// ]
 
 export default function MealPlanModule() {
   const { push } = useRouter();
+  const [mealPlan, setMealPlan] = useState<mealPlanProps[]>([]);
   const [showModal, setShowModal] = useState(false);
   const [selectedItem, setSelectedItem] = useState<mealPlanProps | null>(null);
+
+  useEffect(() => {
+    getMealPlans().then(setMealPlan).catch(console.error);
+  })
+
+  const currency = (price:number) => {
+  return new Intl.NumberFormat('id-ID', {
+    style: 'currency',
+    currency: 'IDR',
+  }).format(price);
+} 
 
   const handleOpenModal = (item: mealPlanProps) => {
     setSelectedItem(item);
@@ -145,46 +156,48 @@ export default function MealPlanModule() {
       </div>
       <Carousel>
         <CarouselContent className="ml-0 max-w-80 md:max-w-2xl lg:max-w-[1185px]">
-          {mealPlanItem.map((item, index) => {
+          {mealPlan.map(plan => {
             return (
-              <CarouselItem key={index} className="flex items-center justify-center md:basis-auto">
-                <div
-                  style={{
-                    backgroundImage: `url(${item.image})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    height: '400px',
-                    width: '345px',
-                    borderRadius: '16px',
-                    imageResolution: '300dpi',
-                  }}
-                >
-                  <div className="bg-black/50 inset-0 rounded-2xl flex h-full transition-all duration-500">
-                    <Card className="bg-transparent border-none shadow-none text-left">
-                      <CardContent className="flex flex-col justify-between h-full">
-                        <div>
-                          <h2 className="text-4xl font-bold text-white mb-2">{item.title}</h2>
-                          <p className="text-gray-300">{item.description}</p>
-                        </div>
-                        <div>
-                          <p className="text-lg text-white font-sans pb-2">{item.price}/meal</p>
-                          <Button
-                            variant={"default"}
-                            onClick={() => {
-                              scroller.scrollTo('mealplansection', {
-                                duration: 800,
-                                smooth: true,
-                              })
-                              handleOpenModal(item)
-                            }}
-                          >
-                            See More Details <ArrowRight className="inline" />
-                          </Button>
-                        </div>
-                      </CardContent>
-                    </Card>
+              <CarouselItem key={plan.id} className="flex items-center justify-center md:basis-auto">
+                {plan.imageUrl && (
+                  <div
+                    style={{
+                      backgroundImage: `url(${plan.imageUrl})`,
+                      backgroundSize: 'cover',
+                      backgroundPosition: 'center',
+                      height: '400px',
+                      width: '345px',
+                      borderRadius: '16px',
+                      imageResolution: '300dpi',
+                    }}
+                  >
+                    <div className="bg-black/50 inset-0 rounded-2xl flex h-full transition-all duration-500">
+                      <Card className="bg-transparent border-none shadow-none text-left">
+                        <CardContent className="flex flex-col justify-between h-full">
+                          <div>
+                            <h2 className="text-4xl font-bold text-white mb-2">{plan.name}</h2>
+                            <p className="text-gray-300">{plan.description}</p>
+                          </div>
+                          <div>
+                            <p className="text-lg text-white font-sans pb-2">{currency(plan.price)}/meal</p>
+                            <Button
+                              variant={"default"}
+                              onClick={() => {
+                                scroller.scrollTo('mealplansection', {
+                                  duration: 800,
+                                  smooth: true,
+                                })
+                                handleOpenModal(plan)
+                              }}
+                            >
+                              See More Details <ArrowRight className="inline" />
+                            </Button>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </div>
                   </div>
-                </div>
+                )}
               </CarouselItem>
             )
           })}
@@ -192,7 +205,7 @@ export default function MealPlanModule() {
         <CarouselPrevious className="text-primary border-2 border-primary w-10 h-10 hidden lg:flex" />
         <CarouselNext className="text-primary border-2 border-primary w-10 h-10 hidden lg:flex" />
       </Carousel>
-      <div>
+      {/* <div>
         {showModal && selectedItem && (
           <div className="absolute top-1/2 left-1/2 -translate-1/2 flex flex-col bg-white rounded-2xl max-h-3/4 overflow-y-scroll gap-5 text-left min-w-80 px-5 py-16 md:min-w-xl md:px-10 lg:px-20 lg:min-w-none">
             <Cross onClick={() => setShowModal(false)} className="absolute top-5 right-5 rotate-45 cursor-pointer text-gray-400 font-extralight hover:opacity-85" />
@@ -224,7 +237,7 @@ export default function MealPlanModule() {
             </div>
           </div>
         )}
-      </div>
+      </div> */}
 
     </section>
   )

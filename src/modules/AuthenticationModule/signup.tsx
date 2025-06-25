@@ -8,32 +8,92 @@ import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion } from "framer-motion";
 
-
 export default function SignUpPage() {
-  const [username, setUsername] = useState('')
-  const [email, setEmail] = useState('')
-  const [password, setPassword] = useState('')
-  const [confirmPassword, setConfirmPassword] = useState('')
-  const [loading, setLoading] = useState(false)
-  const [type, setType] = useState('password')
-  const [icon, setIcon] = useState(<EyeOff />)
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    password: '',
+    confirmPassword: ''
+  });
+  const [error, setError] = useState('');
+  const [success, setSuccess] = useState(false);
+
+  const [passwordType, setPasswordType] = useState('password')
+  const [confirmPasswordType, setConfirmPasswordType] = useState('password')
+
+  const [iconPassword, setIconPassword] = useState(<EyeOff />)
+  const [iconConfirmPassword, setIconConfirmPassword] = useState(<EyeOff />)
+
   const { push } = useRouter();
 
-  const toggleIcon = () => {
-    if (type === 'password') {
-      setIcon(<Eye />)
-      setType('text')
-    } else {
-      setIcon(<EyeOff />)
-      setType('password')
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setForm({
+      ...form,
+      [e.target.name]: e.target.value
+    })
+  }
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setError('');
+    setSuccess(false);
+
+    if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(form.password)) {
+      setError('Password must be at least 8 characters long and contain  uppercase letter, lowercase letter, number, and special character');
+      return;
+    }
+
+    if (form.password !== form.confirmPassword) {
+      setError('Password and Confirm Password do not match');
+      return;
+    }
+
+    try {
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          name: form.name,
+          email: form.email,
+          password: form.password,
+          confirmPassword: form.confirmPassword
+        })
+      })
+
+      const data = await res.json();
+
+      if (!res.ok) {
+        console.log('Backend error:', data);
+        setError(data.error)
+        return;
+      } else {
+        setSuccess(true)
+        push('/auth/signin')
+      }
+    } catch (err: any) {
+      setError(err.message)
     }
   }
 
-  const handleSignIn = () => {
-    if (email === '' && password === '') {
-
+  const toggleIconPassword = () => {
+    if (passwordType === 'password') {
+      setIconPassword(<Eye />)
+      setPasswordType('text')
     } else {
-      push('/')
+      setIconPassword(<EyeOff />)
+      setPasswordType('password')
+    }
+  }
+
+  const toggleIconConfirmPassword = () => {
+    if (confirmPasswordType === 'password') {
+      setIconConfirmPassword(<Eye />)
+      setConfirmPasswordType('text')
+    } else {
+      setIconConfirmPassword(<EyeOff />)
+      setConfirmPasswordType('password')
     }
   }
 
@@ -43,85 +103,58 @@ export default function SignUpPage() {
         <CardContent>
           <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
           <CardDescription className="text-lg text-center">Start your healthy lifestyle with us</CardDescription>
-          <div className="flex flex-col gap-5 mt-7">
-            <div>
-              <label htmlFor="username">Username</label>
+          <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-7">
+            <Input
+              name="name"
+              type="text"
+              className="w-96 h-12 mt-2"
+              onChange={handleChange}
+              placeholder="Name"
+              required
+            />
+            <Input
+              name="email"
+              type="email"
+              className="w-96 h-12 mt-2"
+              onChange={handleChange}
+              placeholder="Email"
+              required
+            />
+            <div className="flex relative">
               <Input
-                name="username"
-                type="text"
-                value={username}
+                name="password"
+                type={passwordType}
                 className="w-96 h-12 mt-2"
-                onChange={(e) => setUsername(e.target.value)}
-                autoComplete="current-username"
+                onChange={handleChange}
+                placeholder="Password"
+                required
               />
+              <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIconPassword}>{iconPassword}</span>
             </div>
-            <div>
-              <label htmlFor="email">Email</label>
+            <div className="flex relative">
               <Input
-                name="email"
-                type="email"
-                value={email}
+                name="confirmPassword"
+                type={confirmPasswordType}
                 className="w-96 h-12 mt-2"
-                onChange={(e) => setEmail(e.target.value)}
-                autoComplete="current-email"
+                onChange={handleChange}
+                placeholder="Confirm Password"
+                required
               />
+              <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIconConfirmPassword}>{iconConfirmPassword}</span>
             </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <div className="flex relative">
-                <Input
-                  name="password"
-                  type={type}
-                  value={password}
-                  className="w-96 h-12 mt-2"
-                  onChange={(e) => setPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
-                <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIcon}>{icon}</span>
-              </div>
-            </div>
-            <div>
-              <label htmlFor="password">Confirm Password</label>
-              <div className="flex relative">
-                <Input
-                  name="password"
-                  type={type}
-                  value={confirmPassword}
-                  className="w-96 h-12 mt-2"
-                  onChange={(e) => setConfirmPassword(e.target.value)}
-                  autoComplete="current-password"
-                />
-                <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIcon}>{icon}</span>
-              </div>
-            </div>
-          </div>
-          <Button
-            variant="default"
-            className="w-full h-12 mt-7"
-            onClick={handleSignIn}
-          >
-            Sign In
-          </Button>
+            <Button
+              variant="default"
+              className="w-full h-12 mt-7"
+              type="submit"
+            >
+              Sign In
+            </Button>
+          </form>
+          {error && <p className="text-destructive mt-2 text-center max-w-96 text-sm">{error}</p>}
+          {success && <p className="text-primary mt-2 text-center">Registration Successful</p>}
           <CardDescription className="text-center mt-3">Already have an account? <a href="/auth/signin" className="text-primary">Sign In</a></CardDescription>
         </CardContent>
       </Card>
-
-      <motion.div
-        initial={{ translateX: 100, opacity: 0 }}
-        animate={{ translateX: 0, opacity: 1 }}
-        transition={{
-          ease: "easeInOut",
-          duration: 0.8
-        }}
-        className={`absolute right-0 top-0 p-5 ${email === '' || password === '' ? 'block' : 'hidden'}`}
-      >
-        <Card>
-          <CardContent>
-            <CardTitle>Failed Login</CardTitle>
-            <CardDescription>Please enter correct password and email</CardDescription>
-          </CardContent>
-        </Card>
-      </motion.div>
     </div>
   )
 } 

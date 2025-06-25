@@ -8,6 +8,14 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from "@/components/ui/popover"
+import { useEffect, useState } from "react";
+import Image from "next/image";
+
+interface User {
+  name: string;
+  email: string;
+  avatarUrl?: string;
+}
 
 interface NavbarItemProps {
   name: string;
@@ -41,6 +49,28 @@ const NavbarItem: NavbarItemProps[] = [
 export default function Navbar() {
   const { push } = useRouter();
   const pathname = usePathname();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
+
+  useEffect(() => {
+    const userData = localStorage.getItem('user')
+    if (userData) {
+      try {
+        setIsLoggedIn(true)
+        setUser(JSON.parse(userData))
+      } catch (error) {
+        console.error('Invalid user user data');
+      }
+    }
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    setIsLoggedIn(false)
+    setUser(null)
+    push('/signin')
+  }
 
   return (
     <nav className="flex items-center justify-between bg-white shadow-md px-5 py-2 md:px-20 lg:px-32 w-full relative z-10">
@@ -69,15 +99,36 @@ export default function Navbar() {
         ))}
       </ul>
       <div>
-        <Button
-          variant={'black'}
-          className="transition duration-200 ease-in-out hidden lg:flex w-20 h-10"
-          onClick={() => {
-            push('/auth/signin')
-          }}
-        >
-          Login
-        </Button>
+        {isLoggedIn ? (
+          <div>
+            {user && (
+              <Popover>
+                <PopoverTrigger asChild>
+                  <Image src={user.avatarUrl || '/dummyicon.png'} alt="logo" width={50} height={50} className="border-2 border-gray-500 rounded-full" />
+                </PopoverTrigger>
+                <PopoverContent>
+                  <div className="flex flex-col gap-2">
+                    <p>Hi, {user.name}</p>
+                    <span>
+                      <a href="/dashboard">Dashboard</a>
+                    </span>
+                    <Button variant={'destructive'} onClick={handleLogout}>Logout</Button>
+                  </div>
+                </PopoverContent>
+              </Popover>
+            )}
+          </div>
+        ) : (
+          <Button
+            variant={'black'}
+            className="transition duration-200 ease-in-out w-20 h-10"
+            onClick={() => {
+              push('/auth/signin')
+            }}
+          >
+            Login
+          </Button>
+        )}
       </div>
 
       <Popover>
@@ -108,15 +159,24 @@ export default function Navbar() {
               ))}
             </ul>
             <div>
-              <Button
-                variant={'black'}
-                className="transition duration-200 ease-in-out w-20 h-10"
-                onClick={() => {
-                  push('/auth/signin')
-                }}
-              >
-                Login
-              </Button>
+              {isLoggedIn ? (
+                <div>
+                  <Image src={'/dummyicon.png'} alt="logo" width={125} className="border-2 border-gray-500 rounded-full" />
+                  {user && (
+                    <p>Hi, {user.name}</p>
+                  )}
+                </div>
+              ) : (
+                <Button
+                  variant={'black'}
+                  className="transition duration-200 ease-in-out w-20 h-10"
+                  onClick={() => {
+                    push('/auth/signin')
+                  }}
+                >
+                  Login
+                </Button>
+              )}
             </div>
           </div>
         </PopoverContent>

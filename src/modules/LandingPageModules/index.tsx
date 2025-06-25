@@ -27,8 +27,6 @@ export default function LandingPageModules() {
             className="flex items-center justify-center z-10 mb-10 lg:hidden"
           >
             <Image src={'/meal.png'} alt="meal" width={550} height={550} />
-            
-            
           </motion.div>
         <div className="flex flex-col items-center gap-10 lg:flex-row lg:justify-between">
           <motion.div
@@ -61,8 +59,6 @@ export default function LandingPageModules() {
             className="items-center justify-center hidden mt-40 z-10 lg:flex "
           >
             <Image src={'/meal.png'} alt="meal" width={550} height={550} />
-            
-            
           </motion.div>
           <motion.div 
             initial={{ translateX: 0, opacity: 0}}
