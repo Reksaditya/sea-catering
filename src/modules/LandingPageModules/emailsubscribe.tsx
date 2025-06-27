@@ -11,7 +11,7 @@ export default function EmailSubscribeModule() {
       </div>
       <div className="w-full flex justify-center items-center mt-10">
         <Input className="w-1/2 lg:w-1/4 h-12" />
-        <Button className="ml-2 h-12">Sign Up</Button>
+        <Button className="ml-2 h-12">Subscribe</Button>
       </div>
     </section>
   )

@@ -99,62 +99,76 @@ export default function SignUpPage() {
 
   return (
     <div className="h-screen flex items-center justify-center bg-secondary">
-      <Card className="p-10 shadow-xl">
-        <CardContent>
-          <CardTitle className="text-2xl text-center">Sign Up</CardTitle>
-          <CardDescription className="text-lg text-center">Start your healthy lifestyle with us</CardDescription>
-          <form onSubmit={handleSubmit} className="flex flex-col gap-5 mt-7">
-            <Input
-              name="name"
-              type="text"
-              className="w-96 h-12 mt-2"
-              onChange={handleChange}
-              placeholder="Name"
-              required
-            />
-            <Input
-              name="email"
-              type="email"
-              className="w-96 h-12 mt-2"
-              onChange={handleChange}
-              placeholder="Email"
-              required
-            />
-            <div className="flex relative">
+      <Image src={'/backgroundfoodpattern.png'} fill alt="pattern" className="absolute z-0 inset-0 hidden lg:flex" />
+      <Image src={'/backgroundpatternresponsive.png'} fill alt="pattern" className="absolute z-0 inset-0 lg:hidden" />
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 15,
+          duration: 0.5,
+        }}
+        className="z-10"
+      >
+        <Card className="p-10 shadow-xl">
+          <CardContent>
+            <CardTitle className="text-xl md:text-2xl text-center">Sign Up</CardTitle>
+            <CardDescription className="text-sm text-center">Start your healthy lifestyle with us</CardDescription>
+            <form onSubmit={handleSubmit} className="flex flex-col gap-3 md:gap-5 mt-7">
               <Input
-                name="password"
-                type={passwordType}
-                className="w-96 h-12 mt-2"
+                name="name"
+                type="text"
+                className="md:w-96 mt-2 md:h-12"
                 onChange={handleChange}
-                placeholder="Password"
+                placeholder="Name"
                 required
               />
-              <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIconPassword}>{iconPassword}</span>
-            </div>
-            <div className="flex relative">
               <Input
-                name="confirmPassword"
-                type={confirmPasswordType}
-                className="w-96 h-12 mt-2"
+                name="email"
+                type="email"
+                className="md:w-96 md:h-12 mt-2"
                 onChange={handleChange}
-                placeholder="Confirm Password"
+                placeholder="Email"
                 required
               />
-              <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIconConfirmPassword}>{iconConfirmPassword}</span>
-            </div>
-            <Button
-              variant="default"
-              className="w-full h-12 mt-7"
-              type="submit"
-            >
-              Sign In
-            </Button>
-          </form>
-          {error && <p className="text-destructive mt-2 text-center max-w-96 text-sm">{error}</p>}
-          {success && <p className="text-primary mt-2 text-center">Registration Successful</p>}
-          <CardDescription className="text-center mt-3">Already have an account? <a href="/auth/signin" className="text-primary">Sign In</a></CardDescription>
-        </CardContent>
-      </Card>
+              <div className="flex relative">
+                <Input
+                  name="password"
+                  type={passwordType}
+                  className="md:w-96 md:h-12 mt-2"
+                  onChange={handleChange}
+                  placeholder="Password"
+                  required
+                />
+                <span className="absolute top-3.5 md:top-5 right-3 cursor-pointer scale-90 md:scale-100" onClick={toggleIconPassword}>{iconPassword}</span>
+              </div>
+              <div className="flex relative">
+                <Input
+                  name="confirmPassword"
+                  type={confirmPasswordType}
+                  className="md:w-96 md:h-12 mt-2"
+                  onChange={handleChange}
+                  placeholder="Confirm Password"
+                  required
+                />
+                <span className="absolute top-3.5 md:top-5 right-3 cursor-pointer scale-90 md:scale-100" onClick={toggleIconConfirmPassword}>{iconConfirmPassword}</span>
+              </div>
+              <Button
+                variant="default"
+                className="w-full h-12 mt-7"
+                type="submit"
+              >
+                Sign In
+              </Button>
+            </form>
+            {error && <p className="text-destructive mt-2 text-center max-w-96 text-sm">{error}</p>}
+            {success && <p className="text-primary mt-2 text-center">Registration Successful</p>}
+            <CardDescription className="text-center mt-3">Already have an account? <a href="/auth/signin" className="text-primary">Sign In</a></CardDescription>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   )
 } 

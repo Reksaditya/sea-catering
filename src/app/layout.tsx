@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Monda, Roboto } from "next/font/google";
+import { Toaster } from "react-hot-toast"
 import "./globals.css";
 
 const monda = Monda({
@@ -34,6 +35,7 @@ export default function RootLayout({
       <body
         className={`${roboto.className} ${monda.variable} antialiased`}
       >
+        <Toaster position="top-center" />
         {children}
       </body>
     </html>

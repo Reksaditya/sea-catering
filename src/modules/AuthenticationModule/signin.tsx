@@ -50,8 +50,9 @@ export default function SignInPage() {
       if (!res.ok) {
         throw new Error(data.error || 'Login Failed')
       }
-      localStorage.setItem('token', data.token)
-      setToken(data.token)
+      localStorage.setItem('token', data.token);
+      localStorage.setItem('user', JSON.stringify(data.user));
+      setToken(data.token);
       push('/')
     } catch (error: any) {
       setErrorMsg(error.message)
@@ -71,55 +72,63 @@ export default function SignInPage() {
   }
 
   return (
-    <div className="h-screen flex flex-col items-center justify-center gap-2">
-      <Card className="p-10 shadow-xl flex items-center gap-2">
-        <CardContent>
-          <CardTitle className="text-2xl text-center">Sign In</CardTitle>
-          <CardDescription className="text-lg text-center">Sign in to your account</CardDescription>
-          <form onSubmit={handleLogin} className="flex flex-col gap-5 mt-7">
-            <div>
-              <label htmlFor="email">Email</label>
+    <div className="h-screen flex flex-col items-center justify-center gap-2 bg-secondary relative">
+      <Image src={'/backgroundfoodpattern.png'} fill alt="pattern" className="absolute z-0 inset-0 hidden lg:flex" />
+      <Image src={'/backgroundpatternresponsive.png'} fill alt="pattern" className="absolute z-0 inset-0 lg:hidden" />
+      <motion.div
+        initial={{ scale: 0, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        transition={{
+          type: "spring",
+          stiffness: 200,
+          damping: 15,
+          duration: 0.5,
+        }}
+        className="z-10"
+      >
+        <Card className="p-10 shadow-xl flex items-center gap-2">
+          <CardContent>
+            <CardTitle className="text-xl md:text-2xl text-center">Sign In</CardTitle>
+            <CardDescription className="text-sm text-center">Sign in to your account</CardDescription>
+            <form onSubmit={handleLogin} className="flex flex-col gap-3 md:gap-5 mt-7">
               <Input
                 name="email"
                 type="email"
-                className="w-80 h-12 mt-2"
+                className="mt-2 md:w-96 md:h-12"
                 onChange={handleChange}
-                autoComplete="current-email"
+                placeholder="Email"
                 required
               />
-            </div>
-            <div>
-              <label htmlFor="password">Password</label>
-              <div className="flex relative">
-                <Input
-                  name="password"
-                  type={type}
-                  className="w-80 h-12 mt-2"
-                  onChange={handleChange}
-                  autoComplete="current-password"
-                  required
-                />
-                <span className="absolute top-5 right-3 cursor-pointer" onClick={toggleIcon}>{icon}</span>
+              <div className="flex flex-col">
+                <div className="flex relative">
+                  <Input
+                    name="password"
+                    type={type}
+                    className="mt-2 md:h-12 md:w-96"
+                    onChange={handleChange}
+                    placeholder="Password"
+                    required
+                  />
+                  <span className="absolute right-3 cursor-pointer scale-90 top-3.5 md:top-5 md:scale-100" onClick={toggleIcon}>{icon}</span>
+                </div>
+                <a className="text-primary text-sm mt-2 cursor-pointer text-right">Forgot Password?</a>
               </div>
-              <div className="flex justify-end">
-                <p className="text-primary text-sm mt-2 cursor-pointer">Forgot Password?</p>
+              <div>
+                <Button
+                  variant="default"
+                  className="w-full mt-7 md:h-12"
+                  type="submit"
+                  disabled={loading}
+                >
+                  {loading ? 'Processing...' : 'Sign In'}
+                </Button>
+                {errorMsg && <p className="text-destructive text-sm text-center mt-2">{errorMsg}</p>}
               </div>
-            </div>
-            <div>
-              <Button
-                variant="default"
-                className="w-full h-12 mt-7"
-                type="submit"
-                disabled={loading}
-              >
-                {loading ? 'Processing...' : 'Sign In'}
-              </Button>
-              {errorMsg && <p className="text-destructive text-sm text-center mt-2">{errorMsg}</p>}
-            </div>
-          </form>
-          <CardDescription className="text-center mt-3">Don't have an account? <a href="/auth/signup" className="text-primary">Sign Up</a></CardDescription>
-        </CardContent>
-      </Card>
+            </form>
+            <CardDescription className="text-center mt-3">Don't have an account? <a href="/auth/signup" className="text-primary">Sign Up</a></CardDescription>
+          </CardContent>
+        </Card>
+      </motion.div>
     </div>
   )
 }
