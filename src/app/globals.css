@@ -146,4 +146,7 @@
   body {
     @apply bg-background text-foreground;
     }
+  .loader {
+    @apply inline-block border-2 border-current border-t-transparent rounded-full animate-spin;
+  }
 }

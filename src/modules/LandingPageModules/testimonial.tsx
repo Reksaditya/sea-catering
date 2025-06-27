@@ -1,3 +1,4 @@
+'use client';
 import * as React from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import {
@@ -10,6 +11,7 @@ import {
 import Image from "next/image";
 import { Star, StarHalf } from "lucide-react";
 import { Button } from "@/components/ui/Button";
+import { useState, useEffect } from "react";
 
 interface TestimonialProps {
   profile: string,
@@ -65,6 +67,20 @@ const testimonialItem: TestimonialProps[] = [
 ]
 
 export default function TestimonialModule() {
+  const [testimonial, setTestimonial] = useState({
+    profile: '',
+    name: '',
+    star: 0,
+    date: '',
+    comment: ''
+  })
+
+  useEffect(() => {
+    fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimonial`)
+    .then(res => res.json())
+    .then(data => setTestimonial(data))
+  }, [])
+
   return (
     <section className="flex flex-col gap-14 justify-center items-center px-5 py-10 md:px-20 md:py-16 lg:px-32 ">
       <div className="flex flex-col justify-center items-center gap-5">

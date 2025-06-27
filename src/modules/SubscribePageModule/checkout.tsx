@@ -1,10 +1,10 @@
 'use client'
 import { Button } from "@/components/ui/Button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Input } from "@/components/ui/input"
 import Image from "next/image"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import toast from "react-hot-toast";
 
 interface PaymentProps {
   id: string
@@ -29,6 +29,7 @@ const PaymentItem: PaymentProps[] = [
 export default function CheckoutModule() {
   const [subscriptionData, setSubscriptionData] = useState<any>(null)
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
   const { push } = useRouter();
 
   useEffect(() => {
@@ -51,7 +52,7 @@ export default function CheckoutModule() {
     const token = typeof window !== 'undefined' ? localStorage.getItem("token") : null;
 
     if (!paymentMethod) {
-      alert("Please select a payment method.");
+      toast.error("Please select a payment method");
       return;
     }
 
@@ -73,12 +74,16 @@ export default function CheckoutModule() {
       }
 
       const result = await res.json();
-      console.log("✅ Subscription saved:", result);
+      console.log("Subscription saved:", result);
 
-      alert("✅ Subscription berhasil disimpan!");
+      toast.success("Subscription saved successfully");
+
+      setTimeout(() => {
+        push("/subscription/success");
+      }, 1000);
     } catch (err: any) {
       console.error(err);
-      alert("Failed to save subscription");
+      toast.error('failed to save subscription');
     }
   };
 
@@ -172,7 +177,14 @@ export default function CheckoutModule() {
             className="w-full h-12"
             onClick={handleCheckout}
           >
-            Checkout
+            {loading ? (
+              <>
+                <span className="loader border-white border-2 border-t-transparent w-5 h-5 rounded-full mr-2 animate-spin"></span>
+                Processing...
+              </>
+            ) : (
+              "Checkout"
+            )}
           </Button>
 
           <Button

@@ -1,11 +1,9 @@
 'use client'
 import { Input } from "@/components/ui/input"
-import { Card, CardContent } from "@/components/ui/card"
 import Image from "next/image";
 import { Button } from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import { Divide } from "lucide-react";
 
 
 interface FormData {
