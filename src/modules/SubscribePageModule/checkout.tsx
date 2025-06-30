@@ -56,6 +56,18 @@ export default function CheckoutModule() {
       return;
     }
 
+    if (!token) {
+      toast.error("You're not logged in!");
+      return;
+    }
+
+    if (!subscriptionData) {
+      toast.error("No subscription data found");
+      return;
+    }
+
+    setLoading(true);
+
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/subscription`, {
         method: "POST",
@@ -69,21 +81,24 @@ export default function CheckoutModule() {
         }),
       });
 
+      const result = await res.json();
+
       if (!res.ok) {
-        throw new Error("Failed to save subscription");
+        toast.error(result.message || "Failed to save subscription");
+        return;
       }
 
-      const result = await res.json();
-      console.log("Subscription saved:", result);
-
       toast.success("Subscription saved successfully");
+      localStorage.removeItem("subscriptionData");
 
       setTimeout(() => {
         push("/subscription/success");
       }, 1000);
     } catch (err: any) {
-      console.error(err);
-      toast.error('failed to save subscription');
+      console.error("Checkout error:", err);
+      toast.error("Something went wrong during checkout");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -157,13 +172,22 @@ export default function CheckoutModule() {
               <h4 className="text-lg font-bold">Payment Method</h4>
               <div className="flex flex-col md:flex-row gap-5 mt-5">
                 {PaymentItem.map((item, index) => (
-                  <label htmlFor="payment" key={index} className="relative flex justify-center items-center bg-white border border-gray-200 rounded-lg cursor-pointer p-5 min-h-40">
+                  <label
+                    htmlFor={`payment-${index}`}
+                    key={index}
+                    className={`relative flex justify-center items-center bg-white border-2 rounded-lg cursor-pointer p-5 min-h-40 transition ${paymentMethod === item.icon
+                        ? "border-primary shadow-md"
+                        : "border-gray-200"
+                      }`}
+                  >
                     <Image src={item.icon} alt="logo" width={150} height={150} />
                     <input
+                      id={`payment-${index}`}
                       className="absolute w-5 h-5 top-2 left-2"
                       name="payment"
                       type="radio"
                       onChange={() => setPaymentMethod(item.icon)}
+                      checked={paymentMethod === item.icon}
                     />
                   </label>
                 ))}

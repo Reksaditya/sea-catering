@@ -3,9 +3,12 @@ import Navbar from "@/components/layout/Navbar";
 import { Button } from "@/components/ui/Button";
 import { motion } from "framer-motion";
 import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 
 export default function LandingPageModules() {
+  const { push } = useRouter()
+
   return (
     <section id="home">
       <Navbar />
@@ -43,6 +46,7 @@ export default function LandingPageModules() {
               <Button 
                 variant={'black'}
                 className="h-12 md:h-16 md:px-10 transition duration-200 ease-in-out"
+                onClick={() => push('/subscription')}
               >
                 Get My Meal Now
               </Button>

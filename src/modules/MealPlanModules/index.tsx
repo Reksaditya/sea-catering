@@ -13,31 +13,31 @@ interface mealPlanProps {
 
 const mealPlanItem: mealPlanProps[] = [
   {
-    image: '/plan1.jpg',
+    image: './meal-plan-section/meal-plan-image/plan1.jpg',
     title: 'High-Protein',
     description: 'Supports muscle maintenance, heart health, and sustained energy.',
     link: '/protein'
   },
   {
-    image: '/plan2.jpg',
+    image: './meal-plan-section/meal-plan-image/plan2.jpg',
     title: 'Vegetarian',
     description: 'Promotes gut health, helps with digestion, and lowers cholesterol.',
     link: '/vegetarian'
   },
   {
-    image: '/plan3.jpg',
+    image: './meal-plan-section/meal-plan-image/plan3.jpg',
     title: 'Low-Carb',
     description: 'Helps regulate blood sugar, manage weight, and support cardiovascular function.',
     link: '/lowcarb'
   },
   {
-    image: '/plan4.jpg',
+    image: './meal-plan-section/meal-plan-image/plan4.jpg',
     title: 'Asian-Inspired',
     description: 'Reduces inflammation, supports immunity, and improves digestion.',
     link: '/asian'
   },
   {
-    image: '/plan5.jpg',
+    image: './meal-plan-section/meal-plan-image/plan5.jpg',
     title: 'Gluten-Free',
     description: 'Supports people with gluten sensitivity and boosts energy naturally.',
     link: '/glutenfree'

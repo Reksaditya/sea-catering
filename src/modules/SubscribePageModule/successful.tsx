@@ -18,7 +18,7 @@ export default function Successful() {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-screen gap-7">
+    <div className="flex flex-col items-center justify-center h-screen gap-4 md:gap-7">
       <motion.div
         initial={{ rotate: 180, scale: 0, opacity: 0 }}
         animate={{ rotate: 0, scale: 1, opacity: 1 }}
@@ -30,7 +30,7 @@ export default function Successful() {
           duration: 0.5
         }}
       >
-        <Check className="bg-primary p-2 rounded-full w-20 h-20 text-white" />
+        <Check className="bg-primary p-2 rounded-full w-14 h-14 md:w-20 md:h-20 text-white" />
       </motion.div>
       <div className="flex flex-col items-center">
         <motion.h1
@@ -44,7 +44,7 @@ export default function Successful() {
             delay: 0.2,
             duration: 0.5
           }}
-          className="text-5xl text-primary font-bold "
+          className="text-2xl md:text-5xl text-primary font-bold "
         >
           Subscription Successful
         </motion.h1>
@@ -59,7 +59,7 @@ export default function Successful() {
             delay: 0.4,
             duration: 0.5
           }}
-          className="text-xl"
+          className="text-sm md:text-xl"
         >
           Thanks for your subscription
         </motion.p>

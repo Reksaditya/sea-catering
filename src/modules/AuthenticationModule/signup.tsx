@@ -7,6 +7,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export default function SignUpPage() {
   const [form, setForm] = useState({
@@ -39,14 +40,16 @@ export default function SignUpPage() {
     setSuccess(false);
 
     if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).{8,}$/.test(form.password)) {
-      setError('Password must be at least 8 characters long and contain  uppercase letter, lowercase letter, number, and special character');
+      toast.error('Password must be at least 8 characters long and contain  uppercase letter, lowercase letter, number, and special character');
       return;
     }
 
     if (form.password !== form.confirmPassword) {
-      setError('Password and Confirm Password do not match');
+      toast.error('Password and Confirm Password do not match')
       return;
     }
+    
+    const toastId = toast.loading('Signing up...')
 
     try {
       const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/user/register`, {
@@ -70,10 +73,15 @@ export default function SignUpPage() {
         return;
       } else {
         setSuccess(true)
+         
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+        toast.success('Sign Up successful!', { id: toastId })
         push('/auth/signin')
+        
       }
     } catch (err: any) {
       setError(err.message)
+      toast.error('Sign Up failed!', { id: toastId })
     }
   }
 
@@ -160,11 +168,9 @@ export default function SignUpPage() {
                 className="w-full h-12 mt-7"
                 type="submit"
               >
-                Sign In
+                Sign Up
               </Button>
             </form>
-            {error && <p className="text-destructive mt-2 text-center max-w-96 text-sm">{error}</p>}
-            {success && <p className="text-primary mt-2 text-center">Registration Successful</p>}
             <CardDescription className="text-center mt-3">Already have an account? <a href="/auth/signin" className="text-primary">Sign In</a></CardDescription>
           </CardContent>
         </Card>

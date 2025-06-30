@@ -10,6 +10,7 @@ import {
 } from "@/components/ui/popover"
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import toast from "react-hot-toast";
 
 interface User {
   name: string;
@@ -51,13 +52,17 @@ export default function Navbar() {
   const pathname = usePathname();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [user, setUser] = useState<User | null>(null);
-  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const token = localStorage.getItem('token')
     const userData = localStorage.getItem('user')
 
     setIsLoggedIn(!!token)
+
+    if (!token) {
+      localStorage.removeItem('token')
+      localStorage.removeItem('user')
+    }
 
     if (userData) {
       try {
@@ -73,16 +78,21 @@ export default function Navbar() {
     }
   }, []);
 
-  const handleLogout = () => {
-    setLoading(true);
+  const handleLogout = async () => {
+    const toastId = toast.loading('Logging out...')
 
-    setTimeout(() => {
+    try {
+      await new Promise((resolve) => setTimeout(resolve, 1500))
+
       localStorage.removeItem('token')
       localStorage.removeItem('user')
+      
+      toast.success('Logout successful!', { id: toastId })
       setIsLoggedIn(false)
-      setUser(null)
       push('/')
-    }, 1000)
+    } catch (error) {
+      toast.error('Logout failed!', { id: toastId })
+    }
   }
 
   return (
@@ -110,7 +120,7 @@ export default function Navbar() {
         ))}
       </ul>
       <div>
-        {isLoggedIn ? (
+        {isLoggedIn === true ? (
           <div>
             {user && (
               <Popover>
@@ -124,7 +134,7 @@ export default function Navbar() {
                   <div className="flex flex-col gap-7 p-5">
                     <div className="flex gap-2">
                       <User />
-                      <a href="/dashboard/user">Dashboard</a>
+                      <a href="/dashboard">Dashboard</a>
                     </div>
                     <Button variant={'destructive'} onClick={handleLogout}>Logout</Button>
                   </div>
@@ -150,7 +160,7 @@ export default function Navbar() {
           <Menu />
         </PopoverTrigger>
         <PopoverContent className="max-w-80 md:max-w-none">
-          {isLoggedIn ? (
+          {isLoggedIn === true ? (
             <div className="flex flex-col gap-5 px-5 py-2">
               <div>
                 {user && (
@@ -161,7 +171,7 @@ export default function Navbar() {
                     </div>
                     <span className="flex gap-2 cursor-pointer">
                       <User />
-                      <a href="/dashboard/user">Dashboard</a>
+                      <a href="/dashboard">Dashboard</a>
                     </span>
                   </div>
                 )}
