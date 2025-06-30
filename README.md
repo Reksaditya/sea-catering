@@ -39,3 +39,8 @@ Run the project with:
   npm run dev
 ```
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+
+### Access Admin
+To access admin, you must sign in with account below:
+email: admin123@gmail.com
+password: Admin#123

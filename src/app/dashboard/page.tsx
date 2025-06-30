@@ -1,4 +1,5 @@
 'use client';
+import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
 import UserDashboardModule from "@/modules/DashboardModule/user/userdashboard";
 import { useRouter } from "next/navigation";
@@ -17,6 +18,7 @@ export default function UserDashboardPage() {
     <div>
       <Navbar />
       <UserDashboardModule />
+      <Footer />
     </div>
   )
 }

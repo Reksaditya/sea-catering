@@ -1,13 +1,13 @@
 import Footer from "@/components/layout/Footer";
 import Navbar from "@/components/layout/Navbar";
-import MySubscriptionModule from "@/modules/DashboardModule/user/mysubscription";
+import ContactUsModule from "@/modules/ContactUsModule";
 
-export default function MySubscriptionPage() {
+export default function ContactUs() {
   return (
     <div>
       <Navbar />
-      <MySubscriptionModule />
+      <ContactUsModule />
       <Footer />
     </div>
-  )
+  );
 }

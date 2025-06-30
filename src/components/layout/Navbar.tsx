@@ -42,7 +42,7 @@ const NavbarItem: NavbarItemProps[] = [
   },
   {
     name: 'Contact Us',
-    path: '/contact',
+    path: '/contactus',
     pathname: 'contact',
   }
 ]
