@@ -16,6 +16,7 @@ interface User {
   name: string;
   email: string;
   avatarUrl?: string;
+  role: string;
 }
 
 interface NavbarItemProps {
@@ -134,7 +135,7 @@ export default function Navbar() {
                   <div className="flex flex-col gap-7 p-5">
                     <div className="flex gap-2">
                       <User />
-                      <a href="/dashboard">Dashboard</a>
+                      <a href={`${user.role === 'admin' ? '/dashboard/admin' : '/dashboard'}`}>Dashboard</a>
                     </div>
                     <Button variant={'destructive'} onClick={handleLogout}>Logout</Button>
                   </div>

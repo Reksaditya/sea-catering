@@ -12,6 +12,7 @@ type User = {
   name: string;
   email: string;
   imageUrl?: string;
+  role: string;
 };
 
 export default function UserCard() {
@@ -54,11 +55,11 @@ export default function UserCard() {
           <div className="flex flex-col gap-7 w-full">
             <div className="flex gap-2 font-semibold">
               <Home />
-              <a href="/dashboard">Home</a>
+              <a href={`${user?.role === 'admin' ? '/dashboard/admin' : '/dashboard'}`}>Home</a>
             </div>
             <div className="flex gap-2 font-semibold">
               <TicketCheck />
-              <a href="/dashboard/mysubscription">Subscription</a>
+              <a href={`${user?.role === 'admin' ? '/dashboard/admin/usersubscriptions' : '/dashboard/mysubscription'}`}>{user?.role === 'admin' ? 'User Subscriptions' : 'My Subscription'}</a>
             </div>
           </div>
           <Button

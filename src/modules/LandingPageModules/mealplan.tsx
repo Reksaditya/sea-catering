@@ -23,98 +23,84 @@ interface mealPlanProps {
   imageUrl?: string;
 }
 
-// interface mealPlanProps {
-//   modalImage: string;
-//   goodFor: string[];
-//   whatIncludes: string[];
-// }
+interface modalPlanProps {
+  modalImage: string;
+  goodFor: string[];
+  whatIncludes: string[];
+}
 
-// const mealPlanItem: mealPlanProps[] = [
-//   {
-//     image: './meal-plan-section/meal-plan-image/plan1.jpg',
-//     modalImage: './meal-plan-section/modal-popup/protein.jpg',
-//     title: 'High-Protein',
-//     description: 'Supports muscle maintenance, heart health, and sustained energy.',
-//     goodFor: [
-//       'Active individuals',
-//       'People looking to reduce inflammation',
-//       'Those who enjoy a Mediterranean diet.',
-//     ],
-//     whatIncludes: [
-//       'Breakfast: Greek yogurt',
-//       'Lunch: Grilled chicken salad',
-//       'Snack: Handful of almonds + green apple',
-//       'Dinner: Baked salmon, roasted sweet potatoes, and steamed broccoli',
-//     ],
-//     price: 'Rp40.000,00'
-//   },
-//   {
-//     image: './meal-plan-section/meal-plan-image/plan2.jpg',
-//     modalImage: './meal-plan-section/modal-popup/vegetarian.png',
-//     title: 'Vegetarian',
-//     description: 'Promotes gut health, helps with digestion, and lowers cholesterol.',
-//     goodFor: [
-//       'Vegetarians',
-//       'People with high cholesterol',
-//       'Anyone wanting more plant-based meals',
-//     ],
-//     whatIncludes: [
-//       'Breakfast: Oatmeal topped',
-//       'Lunch: Chickpea and spinach curry',
-//       'Snack: Carrot sticks',
-//       'Dinner: Lentil soup with whole-grain toast and a side salad'
-//     ],
-//     price: 'Rp20.000,00'
-//   },
-//   {
-//     image: './meal-plan-section/meal-plan-image/plan3.jpg',
-//     modalImage: './meal-plan-section/modal-popup/lowcarb.jpeg',
-//     title: 'Low-Carb',
-//     description: 'Helps regulate blood sugar, manage weight, and support cardiovascular function.',
-//     goodFor: [
-//       'People with insulin resistance',
-//       'Type 2 diabetes',
-//       'Those on a low-carb diet'
-//     ],
-//     whatIncludes: [
-//       'Breakfast: Scrambled eggs',
-//       'Lunch: Grilled turkey lettuce wraps',
-//       'Snack: Greek yogurt with walnuts',
-//       'Dinner: Zucchini noodles with pesto and grilled shrimp'
-//     ],
-//     price: 'Rp30.000,00'
-//   },
-//   {
-//     modalImage: './meal-plan-section/modal-popup/asianinspired.jpg',
-//     goodFor: [
-//       'People with joint pain',
-//       'Autoimmune concerns',
-//       'Skin issues',
-//     ],
-//     whatIncludes: [
-//       'Breakfast: Fruit smoothie with spinach and almond milk',
-//       'Lunch: Miso soup with tofu, seaweed, and brown rice on the side',
-//       'Snack: Edamame sprinkled with sea salt',
-//       'Dinner: Stir-fried vegetables',
-//     ],
-//     price: 'Rp25.000,00'
-//   },
-//   {
-//     modalImage: './meal-plan-section/modal-popup/glutenfree.jpg',
-//     goodFor: [
-//       'Those with celiac disease',
-//       'Gluten intolerance',
-//       'Low energy levels'
-//     ],
-//     whatIncludes: [
-//       'Breakfast: Chia pudding made with coconut milk and berries',
-//       'Lunch: Quinoa bowl with black beans, corn, avocado, and lime dressing',
-//       'Snack: Rice cakes with almond butter',
-//       'Dinner: Grilled steak with roasted Brussels sprouts and mashed cauliflower'
-//     ],
-//     price: 'Rp30.000,00'
-//   },
-// ]
+const modalPlanItem: modalPlanProps[] = [
+  {
+    modalImage: './meal-plan-section/modal-popup/protein.jpg',
+    goodFor: [
+      'Active individuals',
+      'People looking to reduce inflammation',
+      'Those who enjoy a Mediterranean diet.',
+    ],
+    whatIncludes: [
+      'Breakfast: Greek yogurt',
+      'Lunch: Grilled chicken salad',
+      'Snack: Handful of almonds + green apple',
+      'Dinner: Baked salmon, roasted sweet potatoes, and steamed broccoli',
+    ],
+  },
+  {
+    modalImage: './meal-plan-section/modal-popup/vegetarian.png',
+    goodFor: [
+      'Vegetarians',
+      'People with high cholesterol',
+      'Anyone wanting more plant-based meals',
+    ],
+    whatIncludes: [
+      'Breakfast: Oatmeal topped',
+      'Lunch: Chickpea and spinach curry',
+      'Snack: Carrot sticks',
+      'Dinner: Lentil soup with whole-grain toast and a side salad'
+    ],
+  },
+  {
+    modalImage: './meal-plan-section/modal-popup/lowcarb.jpeg',
+    goodFor: [
+      'People with insulin resistance',
+      'Type 2 diabetes',
+      'Those on a low-carb diet'
+    ],
+    whatIncludes: [
+      'Breakfast: Scrambled eggs',
+      'Lunch: Grilled turkey lettuce wraps',
+      'Snack: Greek yogurt with walnuts',
+      'Dinner: Zucchini noodles with pesto and grilled shrimp'
+    ],
+  },
+  {
+    modalImage: './meal-plan-section/modal-popup/asianinspired.jpg',
+    goodFor: [
+      'People with joint pain',
+      'Autoimmune concerns',
+      'Skin issues',
+    ],
+    whatIncludes: [
+      'Breakfast: Fruit smoothie with spinach and almond milk',
+      'Lunch: Miso soup with tofu, seaweed, and brown rice on the side',
+      'Snack: Edamame sprinkled with sea salt',
+      'Dinner: Stir-fried vegetables',
+    ],
+  },
+  {
+    modalImage: './meal-plan-section/modal-popup/glutenfree.jpg',
+    goodFor: [
+      'Those with celiac disease',
+      'Gluten intolerance',
+      'Low energy levels'
+    ],
+    whatIncludes: [
+      'Breakfast: Chia pudding made with coconut milk and berries',
+      'Lunch: Quinoa bowl with black beans, corn, avocado, and lime dressing',
+      'Snack: Rice cakes with almond butter',
+      'Dinner: Grilled steak with roasted Brussels sprouts and mashed cauliflower'
+    ],
+  },
+]
 
 export default function MealPlanModule() {
   const { push } = useRouter();
@@ -126,12 +112,12 @@ export default function MealPlanModule() {
     getMealPlans().then(setMealPlan).catch(console.error);
   })
 
-  const currency = (price:number) => {
-  return new Intl.NumberFormat('id-ID', {
-    style: 'currency',
-    currency: 'IDR',
-  }).format(price);
-} 
+  const currency = (price: number) => {
+    return new Intl.NumberFormat('id-ID', {
+      style: 'currency',
+      currency: 'IDR',
+    }).format(price);
+  }
 
   const handleOpenModal = (item: mealPlanProps) => {
     setSelectedItem(item);
@@ -205,39 +191,53 @@ export default function MealPlanModule() {
         <CarouselPrevious className="text-primary border-2 border-primary w-10 h-10 hidden lg:flex" />
         <CarouselNext className="text-primary border-2 border-primary w-10 h-10 hidden lg:flex" />
       </Carousel>
-      {/* <div>
+      <div>
         {showModal && selectedItem && (
-          <div className="absolute top-1/2 left-1/2 -translate-1/2 flex flex-col bg-white rounded-2xl max-h-3/4 overflow-y-scroll gap-5 text-left min-w-80 px-5 py-16 md:min-w-xl md:px-10 lg:px-20 lg:min-w-none">
-            <Cross onClick={() => setShowModal(false)} className="absolute top-5 right-5 rotate-45 cursor-pointer text-gray-400 font-extralight hover:opacity-85" />
-            <div>
-              <h1 className="font-bold text-xl md:text-2xl">{selectedItem.title} Plan</h1>
-              <p className="max-w-[500px] pt-2 text-sm md:text-base">{selectedItem.description}</p>
-            </div>
-            <img src={selectedItem.modalImage} alt={selectedItem.title} width={500} height={500} className="self-center" />
-            <div>
-              <h2 className="font-bold text-lg md:text-xl">Good for:</h2>
-              <ul className="list-disc ml-5 text-xs md:text-base md:leading-10">
-                {selectedItem.goodFor.map((criteria, index) =>
-                  <li key={index}>{criteria}</li>
-                )}
-              </ul>
-            </div>
-            <div>
-              <h2 className="font-bold text-lg md:text-xl">What's included</h2>
-              <ul className="list-disc ml-5 text-xs md:text-base md:leading-10">
-                {selectedItem.whatIncludes.map((item, index) =>
-                  <li key={index}>{item}</li>
-                )}
-              </ul>
-            </div>
-            <p className="font-bold text-center text-xl md:text-2xl">{selectedItem.price}/meal</p>
-            <div className="flex flex-col justify-center gap-2">
-              <Button variant={"default"} onClick={() => push("/subscription")} className="md:h-16"> Plan Now </Button>
-              <Button variant={"destructive"} onClick={() => setShowModal(false)}> Close </Button>
+          <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex justify-center items-center">
+            <div className="bg-white rounded-2xl overflow-y-auto max-h-[90vh] w-[90%] md:w-[700px] p-6 relative">
+              <Cross onClick={() => setShowModal(false)} className="absolute top-4 right-4 cursor-pointer text-gray-400 hover:opacity-85" />
+              <div>
+                <h1 className="font-bold text-2xl mb-2">{selectedItem.name} Plan</h1>
+                <p className="text-sm mb-4">{selectedItem.description}</p>
+              </div>
+              {showModal && selectedItem && (() => {
+                const modalData = modalPlanItem.find(item => item.modalImage === selectedItem.name);
+
+                if (!modalData) return null;
+                return (
+                  <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex justify-center items-center">
+                    <div className="bg-white rounded-2xl overflow-y-auto max-h-[90vh] w-[90%] md:w-[700px] p-6 relative text-left">
+                      <Cross onClick={() => setShowModal(false)} className="absolute top-4 right-4 cursor-pointer rotate-45 text-gray-400 hover:opacity-85" />
+                      <div>
+                        <h1 className="font-bold text-2xl mb-2">{selectedItem.name} Plan</h1>
+                        <p className="text-sm mb-4">{selectedItem.description}</p>
+                      </div>
+                      <img src={modalData.modalImage} alt={selectedItem.name} className="rounded w-full h-64 object-cover mb-4" />
+                      <h2 className="font-semibold text-lg mb-2">Good For:</h2>
+                      <ul className="list-disc pl-5 mb-4 text-sm">
+                        {modalData.goodFor.map((text, i) => <li key={i}>{text}</li>)}
+                      </ul>
+                      <h2 className="font-semibold text-lg mb-2">What's Included:</h2>
+                      <ul className="list-disc pl-5 mb-4 text-sm">
+                        {modalData.whatIncludes.map((text, i) => <li key={i}>{text}</li>)}
+                      </ul>
+                      <p className="font-bold text-center text-xl mb-4">{currency(selectedItem.price)}/meal</p>
+                      <div className="flex justify-center gap-3">
+                        <Button variant="default" onClick={() => push("/subscription")}>Plan Now</Button>
+                        <Button variant="destructive" onClick={() => setShowModal(false)}>Close</Button>
+                      </div>
+                    </div>
+                  </div>
+                )})()}
+              <p className="font-bold text-center text-xl mb-4">{currency(selectedItem.price)}/meal</p>
+              <div className="flex justify-center gap-3">
+                <Button variant="default" onClick={() => push("/subscription")}>Plan Now</Button>
+                <Button variant="destructive" onClick={() => setShowModal(false)}>Close</Button>
+              </div>
             </div>
           </div>
         )}
-      </div> */}
+      </div>
 
     </section>
   )

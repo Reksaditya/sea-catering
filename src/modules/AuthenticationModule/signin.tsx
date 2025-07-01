@@ -54,9 +54,10 @@ export default function SignInPage() {
         throw new Error(data.error || 'Login Failed')
       }
 
-      toast.success('Signin successful!', { id: toastId })
+      toast.success('Hello, ' + data.user.name + '!', { id: toastId })
       localStorage.setItem('token', data.token);
       localStorage.setItem('user', JSON.stringify(data.user));
+      localStorage.setItem("role", data.user.role);
       setToken(data.token);
       push('/')
     } catch (error: any) {
