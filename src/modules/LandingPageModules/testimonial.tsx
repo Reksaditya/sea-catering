@@ -24,42 +24,42 @@ interface TestimonialProps {
 const testimonialItem: TestimonialProps[] = [
   {
     profile: '/dummyicon.png',
-    name: 'Mulyono',
+    name: 'John Doe',
     star: 5,
     date: '10 Jun 2025',
     comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.'
   },
   {
     profile: '/dummyicon.png',
-    name: 'Sarijem',
+    name: 'Jennifer Smith',
     star: 4,
     date: '30 April 2025',
     comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.'
   },
   {
     profile: '/dummyicon.png',
-    name: 'Gibran072',
+    name: 'Jonny Brown',
     star: 4,
     date: '20 May 2024',
     comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.'
   },
   {
     profile: '/dummyicon.png',
-    name: 'Bowo31',
+    name: 'Billy Bob',
     star: 5,
     date: '14 Feb 2024',
     comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.'
   },
   {
     profile: '/dummyicon.png',
-    name: 'Joko',
+    name: 'James Williams',
     star: 3,
     date: '1 Feb 2024',
     comment: 'Lorem ipsum dolor sit amet consectetur adipisicing elit. Quisquam, quas.'
   },
   {
     profile: '/dummyicon.png',
-    name: 'Dode',
+    name: 'Dollie Jones',
     star: 5,
     date: '18 Okt 2023',
     comment: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec ut purus volutpat, vehicula felis a, lobortis turpis. Maecenas non viverra purus. Duis id eros pharetra, placerat dolor sed, posuere felis. Nulla condimentum nec erat nec tempor. '
@@ -67,13 +67,7 @@ const testimonialItem: TestimonialProps[] = [
 ]
 
 export default function TestimonialModule() {
-  const [testimonial, setTestimonial] = useState({
-    profile: '',
-    name: '',
-    star: 0,
-    date: '',
-    comment: ''
-  })
+  const [testimonial, setTestimonial] = useState<TestimonialProps[]>([]);
 
   useEffect(() => {
     fetch(`${process.env.NEXT_PUBLIC_API_URL}/testimonial`)
