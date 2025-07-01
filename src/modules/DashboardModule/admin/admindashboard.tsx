@@ -59,7 +59,7 @@ export default function AdminDashboardModule() {
         <UserCard />
       </div>
       <div className='flex flex-col w-full'>
-        <h1 className="text-2xl font-bold">Admin Dashboard</h1>
+        <h1 className="text-4xl font-bold">Admin Dashboard</h1>
         <div className="flex flex-col gap-5 ">
           <div className="mt-5">
             <p>Select Month:</p>
@@ -98,20 +98,20 @@ export default function AdminDashboardModule() {
               <Card title="Active Subscriptions" value={metrics.activeSubscriptions} />
               <div className='w-full flex flex-col gap-2'>
                 <label>Meal Plan Avaliable: </label>
-                <table className='w-full border border-gray-700'>
+                <table className="w-full border">
                   <thead>
-                    <tr>
-                      <th className='border border-gray-700'>Meal Plan</th>
-                      <th className='border border-gray-700'>Price</th>
-                      <th className='border border-gray-700'>Subscriptions</th>
+                    <tr className="bg-gray-100">
+                      <th className="p-2 text-left">Meal Plan</th>
+                      <th className="p-2 text-left">Price</th>
+                      <th className="p-2 text-left">Subscriptions</th>
                     </tr>
                   </thead>
                   <tbody>
                     {mealPlans.map((mealPlan) => (
                       <tr key={mealPlan.id}>
-                        <td className='border border-gray-700 px-2'>{mealPlan.name}</td>
-                        <td className='border border-gray-700 px-2'>Rp{mealPlan.price.toLocaleString('id-ID')}</td>
-                        <td className='border border-gray-700 px-2'>{mealPlan.Subscription.length ?? 0}</td>
+                        <td className='p-2'>{mealPlan.name}</td>
+                        <td className='p-2'>Rp{mealPlan.price.toLocaleString('id-ID')}</td>
+                        <td className='p-2'>{mealPlan.Subscription.length ?? 0}</td>
                       </tr>
                     ))}
                   </tbody>
