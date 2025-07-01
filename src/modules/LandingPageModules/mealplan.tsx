@@ -24,6 +24,7 @@ interface mealPlanProps {
 }
 
 interface modalPlanProps {
+  name: string;
   modalImage: string;
   goodFor: string[];
   whatIncludes: string[];
@@ -31,6 +32,7 @@ interface modalPlanProps {
 
 const modalPlanItem: modalPlanProps[] = [
   {
+    name: 'High Protein',
     modalImage: './meal-plan-section/modal-popup/protein.jpg',
     goodFor: [
       'Active individuals',
@@ -45,6 +47,7 @@ const modalPlanItem: modalPlanProps[] = [
     ],
   },
   {
+    name: 'Vegetarian',
     modalImage: './meal-plan-section/modal-popup/vegetarian.png',
     goodFor: [
       'Vegetarians',
@@ -59,6 +62,7 @@ const modalPlanItem: modalPlanProps[] = [
     ],
   },
   {
+    name: 'Low Carb',
     modalImage: './meal-plan-section/modal-popup/lowcarb.jpeg',
     goodFor: [
       'People with insulin resistance',
@@ -73,6 +77,7 @@ const modalPlanItem: modalPlanProps[] = [
     ],
   },
   {
+    name: 'Asian Inspired',
     modalImage: './meal-plan-section/modal-popup/asianinspired.jpg',
     goodFor: [
       'People with joint pain',
@@ -87,6 +92,7 @@ const modalPlanItem: modalPlanProps[] = [
     ],
   },
   {
+    name: 'Gluten Free',
     modalImage: './meal-plan-section/modal-popup/glutenfree.jpg',
     goodFor: [
       'Those with celiac disease',
@@ -201,8 +207,7 @@ export default function MealPlanModule() {
                 <p className="text-sm mb-4">{selectedItem.description}</p>
               </div>
               {showModal && selectedItem && (() => {
-                const modalData = modalPlanItem.find(item => item.modalImage === selectedItem.name);
-
+                const modalData = modalPlanItem.find(item => item.name === selectedItem.name);
                 if (!modalData) return null;
                 return (
                   <div className="fixed top-0 left-0 w-full h-full bg-black/50 z-50 flex justify-center items-center">
